@@ -1,7 +1,7 @@
 title: Anmol Goyal
 description: CS Freshman | Computer Systems
 url: "https://anmol-goyal7.github.io"
-baseurl: "" # <--- THIS IS THE MOST IMPORTANT CHANGE (Must be empty)
+baseurl: ""
 markdown: kramdown
 
 # footer: yes
@@ -12,8 +12,5 @@ sass:
     style: compressed
     sass_dir: _sass
 
-nav:
-  - name: "About"
-    link: "/" # Changed from "/researcher/" to "/"
-  - name: "Contact"
-    link: "/contact/" # Changed from "contact" to "/contact/" for better stability
+# Navigation is empty so nothing appears in the top right
+nav: []
