@@ -1,7 +1,7 @@
 title: Anmol Goyal
 description: CS Freshman | Computer Systems
-url: "https://github.com"
-baseurl: "/researcher" # Change to "" if you rename the repo to your-username.github.io
+url: "https://anmol-goyal7.github.io"
+baseurl: "" # <--- THIS IS THE MOST IMPORTANT CHANGE (Must be empty)
 markdown: kramdown
 
 # footer: yes
@@ -14,6 +14,6 @@ sass:
 
 nav:
   - name: "About"
-    link: "/researcher/" # Make sure this matches the baseurl above
+    link: "/" # Changed from "/researcher/" to "/"
   - name: "Contact"
-    link: "contact"
+    link: "/contact/" # Changed from "contact" to "/contact/" for better stability
