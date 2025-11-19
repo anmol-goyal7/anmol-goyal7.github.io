@@ -30,6 +30,7 @@ layout: default
 * Focusing on efficient move generation and board representation.
 
 <b>Attendance Calculator</b>
+* <a href="https://github.com/anmol-goyal7/c/blob/main/margincalculator.c" style="color: #d93025;">View Source Code</a> • <a href="https://onlinegdb.com/5-X78MgTt" style="color: #d93025;">Run Live Demo</a>
 * A C-based tool to track and predict university attendance margins.
 
 # Skills
