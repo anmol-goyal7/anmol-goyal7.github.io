@@ -23,8 +23,6 @@ layout: default
 
 <div style="clear: both;"></div>
 
-<br>
-
 # Projects
 
 <b>Chess Engine (In Progress)</b>
