@@ -8,14 +8,16 @@ layout: default
 
 **CS Freshman &#124; Computer Systems**
 
-I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
-
-<div style="clear: both;"></div>
+[anmolafk7@gmail.com](mailto:anmolafk7@gmail.com) <br>
+[GitHub](https://github.com/anmol-goyal7) <br>
+[LinkedIn](https://www.linkedin.com/in/anmol-goyal-92b460378/) <br>
+[X (Twitter)](https://x.com/anmol_goyal7)
 
 <br>
 
-[anmolafk7@gmail.com](mailto:anmolafk7@gmail.com)  
-[GitHub](https://github.com/anmol-goyal7) • [LinkedIn](https://www.linkedin.com/in/anmol-goyal-92b460378/) • [X (Twitter)](https://x.com/anmol_goyal7)
+I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
+
+<div style="clear: both;"></div>
 
 # Projects
 
