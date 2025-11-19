@@ -17,7 +17,11 @@ layout: default
   <i class="fa-brands fa-x-twitter" style="width: 20px; text-align: center; margin-right: 5px;"></i> <a href="https://x.com/anmol_goyal7">X (Twitter)</a>
 </div>
 
-I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
+<div style="overflow: hidden;">
+  I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
+</div>
+
+<div style="clear: both;"></div>
 
 <br>
 
@@ -34,7 +38,6 @@ I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently foc
 
 * **Languages:** C, Python, C++ (Planning)
 * **Interests:** Machine Learning, Computer Systems
-* **Tools:** Linux, Neovim, Hyprland, Git
 
 ---
 
