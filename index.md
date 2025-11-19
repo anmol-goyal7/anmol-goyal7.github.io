@@ -2,16 +2,18 @@
 layout: default
 ---
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <img src="profile.jpg" style="float: right; width: 200px; margin-left: 20px; margin-bottom: 10px; border-radius: 5px;">
 
 # About Me
 
 **CS Freshman &#124; Computer Systems**
 
-[anmolafk7@gmail.com](mailto:anmolafk7@gmail.com) <br>
-[GitHub](https://github.com/anmol-goyal7) <br>
-[LinkedIn](https://www.linkedin.com/in/anmol-goyal-92b460378/) <br>
-[X (Twitter)](https://x.com/anmol_goyal7)
+* <i class="fa-solid fa-envelope" style="margin-right: 5px;"></i> [anmolafk7@gmail.com](mailto:anmolafk7@gmail.com)
+* <i class="fa-brands fa-github" style="margin-right: 5px;"></i> [GitHub](https://github.com/anmol-goyal7)
+* <i class="fa-brands fa-linkedin" style="margin-right: 5px;"></i> [LinkedIn](https://www.linkedin.com/in/anmol-goyal-92b460378/)
+* <i class="fa-brands fa-x-twitter" style="margin-right: 5px;"></i> [X (Twitter)](https://x.com/anmol_goyal7)
 
 <br>
 
