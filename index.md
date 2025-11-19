@@ -8,7 +8,7 @@ layout: default
 
 # About Me
 
-**CS Freshman &#124; Computer Systems**
+<b>CS Freshman &#124; Computer Systems</b>
 
 <div style="margin-top: 10px; margin-bottom: 20px; line-height: 1.6;">
   <i class="fa-solid fa-envelope" style="width: 20px; text-align: center; margin-right: 5px;"></i> <a href="mailto:anmolafk7@gmail.com">anmolafk7@gmail.com</a><br>
@@ -18,7 +18,7 @@ layout: default
 </div>
 
 <div style="overflow: hidden;">
-  I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
+  I am a <b>Computer Science freshman</b> at <b>SRMIST Kattankulathur</b>, currently focused on <b>deepening my knowledge in C</b> and <b>learning Python</b>. I am keenly looking forward to exploring <b>C++</b> and diving into <b>Machine Learning</b> while actively working on relevant projects.
 </div>
 
 <div style="clear: both;"></div>
@@ -27,17 +27,17 @@ layout: default
 
 # Projects
 
-**Chess Engine (In Progress)**
+<b>Chess Engine (In Progress)</b>
 * Developing a chess program written purely in C.
 * Focusing on efficient move generation and board representation.
 
-**Attendance Calculator**
+<b>Attendance Calculator</b>
 * A C-based tool to track and predict university attendance margins.
 
 # Skills
 
-* **Languages:** C, Python, C++ (Planning)
-* **Interests:** Machine Learning, Computer Systems
+* <b>Languages:</b> C, Python, C++ (Planning)
+* <b>Interests:</b> Machine Learning, Computer Systems
 
 ---
 
