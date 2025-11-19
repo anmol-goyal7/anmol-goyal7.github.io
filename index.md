@@ -6,7 +6,7 @@ layout: default
 
 # About Me
 
-**CS Freshman • Computer Systems**
+**CS Freshman | Computer Systems**
 
 I am a **Computer Science freshman** at **SRMIST Kattankulathur**, currently focused on **deepening my knowledge in C** and **learning Python**. I am keenly looking forward to exploring **C++** and diving into **Machine Learning** while actively working on relevant projects.
 
