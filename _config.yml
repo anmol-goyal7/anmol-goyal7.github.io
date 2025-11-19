@@ -5,12 +5,12 @@ baseurl: ""
 markdown: kramdown
 
 # footer: yes
-footer_url: "https://github.com/ankitsultana/researcher"
-footer_text: "© 2025 Anmol Goyal. Theme by Ankit Sultana."
+footer_url: "https://maturk.github.io/"
+footer_text: "© 2025 Anmol Goyal. Template credits: <a href='https://maturk.github.io/'>Matias Turkulainen</a>."
 
 sass:
     style: compressed
     sass_dir: _sass
 
-# Navigation is empty so nothing appears in the top right
+# Navigation is empty
 nav: []
