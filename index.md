@@ -18,7 +18,7 @@ layout: default
 </div>
 
 <div style="overflow: hidden;">
-  I am a <b>Computer Science freshman</b> at <b>SRMIST Kattankulathur</b>, currently focused on <b>deepening my knowledge in C</b> and <b>learning Python</b>. I am keenly looking forward to exploring <b>C++</b> and diving into <b>Machine Learning</b> while actively working on relevant projects.
+  I am a <b>Computer Science freshman</b> at <b>SRMIST Kattankulathur</b>, currently focused on <b>deepening my knowledge in C</b> and <b>learning Python</b>. I am keenly looking forward to exploring <b>C++</b> while actively working on relevant projects.
 </div>
 
 <div style="clear: both;"></div>
