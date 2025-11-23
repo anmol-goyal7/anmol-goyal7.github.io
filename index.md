@@ -40,4 +40,4 @@ layout: default
 
 ---
 
-> "Those who can't hear the music think the dancers are insane."
+> "You have to be a little bit crazy to do great things."
