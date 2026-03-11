@@ -93,7 +93,7 @@
     #hero {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 38%;
+      grid-template-columns: 1fr 380px;
       gap: 0;
       padding: 0;
       border-bottom: 1px solid var(--border);
@@ -104,7 +104,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      border-right: 1px solid var(--border);
+      
     }
 
     .hero-label {
@@ -148,18 +148,21 @@
     .hero-links .dot { color: var(--border); }
 
     .hero-right {
-      position: relative;
-      overflow: hidden;
-      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      padding: 40px;
     }
 
     .hero-right img {
-      width: 100%;
-      height: 100%;
+      width: 280px;
+      height: 380px;
       object-fit: cover;
       object-position: center top;
       display: block;
       filter: grayscale(15%);
+      border: 1px solid var(--border);
     }
 
     /* ── PROJECTS ── */
@@ -380,7 +383,7 @@
       color: var(--muted);
       text-decoration: none;
       padding: 28px 32px;
-      border-right: 1px solid var(--border);
+      
       transition: color 0.25s, background 0.25s;
       display: flex;
       flex-direction: column;
@@ -460,7 +463,7 @@
         padding: 22px 20px;
       }
 
-      .contact-link:nth-child(odd) { border-right: 1px solid var(--border); }
+      .contact-link:nth-child(odd) {  }
       .contact-link:last-child { border-bottom: none; }
 
       footer { flex-direction: column; gap: 6px; text-align: center; padding: 24px 4vw; }
@@ -642,10 +645,10 @@
     <p class="contact-sub">if you have something interesting to say, or want to collaborate on something weird, i'm around. no pressure though.</p>
 
     <div class="contact-grid">
-      <a class="contact-link" href="/cdn-cgi/l/email-protection#225b4d575062474f434b4e0c414d4f">
-        <span class="contact-link-label">email</span>
-        <span><span class="__cf_email__" data-cfemail="b5ccdac0c7f5d0d8d4dcd99bd6dad8">[email&#160;protected]</span></span>
-      </a>
+      <a class="contact-link" href="mailto:anmolafk7@gmail.com">
+        <span class="contact-link-label">EMAIL</span>
+        <span>anmolafk7@gmail.com</span>
+      </a>    
       <a class="contact-link" href="https://github.com/anmol-goyal7" target="_blank" rel="noopener">
         <span class="contact-link-label">github</span>
         <span>anmol-goyal7</span>
