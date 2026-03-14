@@ -40,6 +40,7 @@
       line-height: 1.7;
       width: 100%;
       overflow-x: hidden;
+      text-transform: lowercase; /* intentional */
     }
 
     /* ── NAV ── */
@@ -369,6 +370,19 @@
 
     .skill-pill:hover { color: var(--fg); border-color: rgba(255,255,255,0.25); cursor: default; }
 
+    /* ── CV BUTTON ── */
+    .cv-btn {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      letter-spacing: 0.5px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+
+    .cv-btn:hover { color: var(--fg); border-color: rgba(255,255,255,0.25); }
+
     /* ── CONTACT ── */
     #contact .contact-heading {
       font-size: clamp(32px, 5vw, 64px);
@@ -509,7 +523,7 @@
         cs freshman at srmist. currently obsessed with graphics, computing systems, and understanding how computers actually work from scratch.
       </p>
       <div class="hero-links">
-        <a href="assets/cv_01.pdf" target="_blank" rel="noopener">cv</a>
+        <a class="cv-btn" href="/resume.pdf" download>↓ résumé</a>
         <span class="dot">·</span>
         <a href="#projects">work</a>
         <span class="dot">·</span>
@@ -645,8 +659,6 @@
         <div class="skill-items">
           <span class="skill-pill">neovim</span>
           <span class="skill-pill">git</span>
-          <span class="skill-pill">arch linux</span>
-          <span class="skill-pill">openmp</span>
         </div>
       </div>
     </div>
