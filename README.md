@@ -1,25 +1,42 @@
 # anmol-goyal7.github.io
 
-Personal portfolio website hosted using GitHub Pages.
+Personal portfolio website — [anmol-goyal7.github.io](https://anmol-goyal7.github.io)
 
-## Overview
+## About
 
-This repository contains the source code for my personal website.
+Minimal single-page portfolio built with plain HTML and CSS. No frameworks, no build tools, no dependencies — just a single `index.html` deployed via GitHub Pages.
 
-The website is intentionally kept minimal and lightweight and is currently built using a single `index.html` file.
+## Stack
 
-## AI Usage
+| Layer   | Technology       |
+|---------|------------------|
+| Markup  | HTML5            |
+| Styling | CSS3             |
+| Font    | Space Mono (Google Fonts) |
+| Hosting | GitHub Pages     |
 
-This website was created completely with the assistance of AI tools.
-The design, structure, and code were generated with AI and then deployed using GitHub Pages.
+## Structure
 
-## Tech
+```
+.
+├── index.html        # entire site
+├── assets/
+│   ├── cv_01.pdf     # resume
+│   ├── favicon.svg
+│   └── img_*.png     # project / section images
+└── .nojekyll         # disables Jekyll processing
+```
 
-* HTML
-* CSS
-* GitHub Pages
+## Running Locally
 
-## Live Website
+No build step required. Open `index.html` directly in a browser, or serve it with any static file server:
 
-https://anmol-goyal7.github.io
+```bash
+npx serve .
+# or
+python3 -m http.server
+```
 
+## Contact
+
+anmolafk7@gmail.com
