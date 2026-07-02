@@ -255,6 +255,10 @@
     <p class="about-text" id="sec-about">
       hi i'm anmol. i like to work around with graphics and low level stuff like C/C++.
       currently reading about computing systems, gpu computing and robotics. i spend most of my time solving math.
+
+      hi i'm anmol. i like messing around with graphics and low-level c/c++.
+      currently reading about gpu computing, robotics, and i spend most of my time doing math.
+      32dd70f (updating the portfolio)
     </p>
 
     <h2 id="sec-projects">projects</h2>
@@ -265,7 +269,11 @@
       </li>
       <li class="entry-block">
         <a class="entry-name" href="https://github.com/anmol-goyal7/mini-compiler" target="_blank">mini compiler (x86-64 asm)</a>
-        <p class="entry-desc">hand-rolled compiler pipeline - recursive descent parser, typed ast, and a codegen backend that emits real x86-64 assembly. no llvm, no shortcuts.</p>
+        <p class="entry-desc">compiler pipeline: recursive descent parser → typed ast → x86-64 codegen. no llvm.</p>
+      </li>
+      <li class="entry-block">
+        <a class="entry-name" href="https://github.com/anmol-goyal7/Matrix-OpenMP-Benchmark" target="_blank">matrix-openmp-benchmark</a>
+        <p class="entry-desc">parallel matrix multiplication using openmp, benchmarked against serial. 4.72x speedup on 1000×1000 matrices.</p>
       </li>
     </ul>
 
@@ -275,6 +283,7 @@
       <li><a href="https://x.com/anmol_goyal7" target="_blank">twitter / x</a></li>
       <li><a href="https://linkedin.com/in/anmol-goyal-92b460378/" target="_blank">linkedin</a></li>
       <li><a href="mailto:anmolafk7@gmail.com">email</a></li>
+      <li><a href="/resume.pdf" target="_blank">resume</a></li>
     </ul>
 
   </div>
@@ -331,6 +340,7 @@
     { name: 'X',        hint: 'open ↗',       action: () => window.open('https://x.com/anmol_goyal7', '_blank') },
     { name: 'linkedin', hint: 'open ↗',       action: () => window.open('https://linkedin.com/in/anmol-goyal-92b460378/', '_blank') },
     { name: 'email',    hint: 'open ↗',       action: () => window.location.href = 'mailto:anmolafk7@gmail.com' },
+    { name: 'resume',   hint: 'open ↗',       action: () => window.open('/resume.pdf', '_blank') },
   ];
 
   let selIdx = 0;
