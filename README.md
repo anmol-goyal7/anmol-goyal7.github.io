@@ -15,7 +15,7 @@ Personal portfolio website hosted on GitHub Pages.
    git clone https://github.com/<your-username>/<your-username>.github.io.git
    ```
 
-5. **Customize** — edit `index.html` with your own info, swap out `rover.png` with your own image, and push:
+5. **Customize** — edit `index.html` with your own info, swap out `rover.webp` with your own image (update the `<img src>` and the `og:image` meta tag if you change the filename), and push:
    ```bash
    git add -A && git commit -m "personalize" && git push
    ```

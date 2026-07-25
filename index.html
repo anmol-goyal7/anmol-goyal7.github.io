@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>anmol goyal</title>
+<meta name="description" content="cs sophomore working on systems and graphics. c/c++ projects: a recursive ray tracer, a mini compiler targeting x86-64, and openmp benchmarks.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23111' stroke-width='3'/%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anmol-goyal7.github.io/">
+<meta property="og:title" content="Anmol Goyal">
+<meta property="og:description" content="cs sophomore working on systems and graphics. c/c++ projects: a recursive ray tracer, a mini compiler targeting x86-64, and openmp benchmarks.">
+<meta property="og:image" content="https://anmol-goyal7.github.io/rover.webp">
+<meta property="og:image:alt" content="Opportunity rover tracks on Mars">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@anmol_goyal7">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -131,8 +143,6 @@
   }
 
   /* --- rover telemetry --- */
-  .panel-img { position: sticky; }
-
   #telemetry {
     position: absolute;
     bottom: 16px;
@@ -197,9 +207,23 @@
     align-items: center;
   }
 
+  #cmd-list li:hover {
+    background: #fafafa;
+  }
+
   #cmd-list li.sel {
     background: #f4f4f4;
     color: #111;
+  }
+
+  #cmd-list li.empty {
+    color: #bbb;
+    cursor: default;
+    justify-content: flex-start;
+  }
+
+  #cmd-list li.empty:hover {
+    background: none;
   }
 
   #cmd-list li .hint {
@@ -236,6 +260,10 @@
       padding: 56px 28px 80px;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ripple { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -243,21 +271,21 @@
 <div class="layout">
 
   <div class="panel-img">
-    <img src="rover.png" alt="Opportunity rover tracks on Mars">
+    <img src="rover.webp" alt="Opportunity rover tracks on Mars">
     <div id="telemetry"></div>
   </div>
 
   <div class="panel-content">
 
-    <p class="site-name" id="sec-top">Anmol Goyal</p>
-    <p class="site-desc">cs sophomore | systems & graphics</p>
+    <p class="site-name">Anmol Goyal</p>
+    <p class="site-desc">cs sophomore | systems &amp; graphics</p>
 
-    <p class="about-text" id="sec-about">
+    <p class="about-text">
       hi i'm anmol. i like messing around with graphics and c/c++.
       currently reading about systems, gpu computing, robotics, and i spend most of my time doing math.
     </p>
 
-    <h2 id="sec-projects">projects</h2>
+    <h2>projects</h2>
     <ul class="entries">
       <li class="entry-block">
         <a class="entry-name" href="https://github.com/anmol-goyal7/ray-tracing" target="_blank">ray tracer in c++</a>
@@ -273,7 +301,7 @@
       </li>
     </ul>
 
-    <h2 id="sec-links">links</h2>
+    <h2>links</h2>
     <ul class="notes">
       <li><a href="https://github.com/anmol-goyal7" target="_blank">github</a></li>
       <li><a href="https://x.com/anmol_goyal7" target="_blank">twitter / x</a></li>
@@ -287,10 +315,11 @@
 
 <div class="cmd-tip">press <kbd>/</kbd></div>
 
-<div id="cmd-overlay">
+<div id="cmd-overlay" role="dialog" aria-modal="true" aria-label="command palette" aria-hidden="true">
   <div id="cmd-box">
-    <input id="cmd-input" type="text" placeholder="type a command…" autocomplete="off" spellcheck="false">
-    <ul id="cmd-list"></ul>
+    <input id="cmd-input" type="text" placeholder="type a command…" aria-label="search commands"
+           autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="cmd-list">
+    <ul id="cmd-list" role="listbox" aria-label="commands"></ul>
   </div>
 </div>
 
@@ -331,30 +360,58 @@
   const input = document.getElementById('cmd-input');
   const list = document.getElementById('cmd-list');
 
+  // localStorage can throw when cookies/site data are blocked
+  const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} };
+
+  let muted = store('muted') === '1';
+
   const commands = [
     { name: 'github',   hint: 'open ↗',       action: () => window.open('https://github.com/anmol-goyal7', '_blank') },
-    { name: 'X',        hint: 'open ↗',       action: () => window.open('https://x.com/anmol_goyal7', '_blank') },
+    { name: 'x',        hint: 'open ↗',       action: () => window.open('https://x.com/anmol_goyal7', '_blank') },
     { name: 'linkedin', hint: 'open ↗',       action: () => window.open('https://linkedin.com/in/anmol-goyal-92b460378/', '_blank') },
     { name: 'email',    hint: 'open ↗',       action: () => window.location.href = 'mailto:anmolafk7@gmail.com' },
     { name: 'resume',   hint: 'open ↗',       action: () => window.open('/resume.pdf', '_blank') },
+    { name: 'sound',    hint: () => muted ? 'off' : 'on', action: () => {
+        muted = !muted;
+        store('muted', muted ? '1' : '0');
+      } },
   ];
 
   let selIdx = 0;
   let filtered = commands;
+  let lastFocus = null;
 
   function renderList() {
     list.innerHTML = '';
+
+    if (!filtered.length) {
+      const li = document.createElement('li');
+      li.className = 'empty';
+      li.textContent = 'no matching command';
+      list.appendChild(li);
+      return;
+    }
+
     filtered.forEach((cmd, i) => {
       const li = document.createElement('li');
-      if (i === selIdx) li.className = 'sel';
-      li.innerHTML = cmd.name + '<span class="hint">' + cmd.hint + '</span>';
+      const sel = i === selIdx;
+      if (sel) li.className = 'sel';
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', sel ? 'true' : 'false');
+      li.textContent = cmd.name;
+      const hint = document.createElement('span');
+      hint.className = 'hint';
+      hint.textContent = typeof cmd.hint === 'function' ? cmd.hint() : cmd.hint;
+      li.appendChild(hint);
       li.addEventListener('click', () => runCmd(cmd));
       list.appendChild(li);
     });
   }
 
   function openPalette() {
+    lastFocus = document.activeElement;
     overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
     input.value = '';
     filtered = commands;
     selIdx = 0;
@@ -364,6 +421,9 @@
 
   function closePalette() {
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    lastFocus = null;
   }
 
   function runCmd(cmd) {
@@ -400,7 +460,7 @@
 
   input.addEventListener('input', () => {
     const q = input.value.toLowerCase().trim();
-    filtered = commands.filter(c => c.name.includes(q));
+    filtered = commands.filter(c => c.name.toLowerCase().includes(q));
     selIdx = 0;
     renderList();
   });
@@ -411,10 +471,13 @@
 
   // --- click sound + ripple ---
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let actx = null;
 
   function playTick() {
+    if (muted || !AudioCtx) return;
     if (!actx) actx = new AudioCtx();
+    if (actx.state === 'suspended') actx.resume();
     const t = actx.currentTime;
     const bufSize = Math.floor(actx.sampleRate * 0.008);
     const buf = actx.createBuffer(1, bufSize, actx.sampleRate);
@@ -439,6 +502,7 @@
 
   document.addEventListener('click', (e) => {
     playTick();
+    if (reduceMotion.matches) return;
     const r = document.createElement('div');
     r.className = 'ripple';
     r.style.left = e.clientX + 'px';
@@ -452,8 +516,6 @@
       { width: '70px', height: '70px', opacity: 0   }
     ], { duration: 480, easing: 'ease-out', fill: 'forwards' }).onfinish = () => r.remove();
   });
-
-
 </script>
 
 </body>
