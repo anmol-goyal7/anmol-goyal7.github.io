@@ -24,4 +24,4 @@ Personal portfolio website hosted on GitHub Pages.
 
 ## License
 
-Feel free to fork and modify for your own use.
+[MIT](LICENSE) — fork and modify freely, just keep the copyright notice.
