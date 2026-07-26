@@ -16,11 +16,22 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@anmol_goyal7">
+
+<script>
+  // runs before paint: the palette's theme state lives at the bottom of the
+  // page, and waiting for it would flash the wrong theme on load
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   /* every text colour below clears WCAG AA (4.5:1) against its background */
   :root {
+    color-scheme: light;
     --bg: #fff;
     --fg: #111;
     --muted: #6b6b6b;
@@ -35,8 +46,13 @@
     --shadow: rgba(0,0,0,0.14);
   }
 
+  /* the dark palette is declared twice on purpose: once behind the media
+     query so it still works with JS off, and once behind the attribute so
+     the palette's `theme` command can force it. :not([data-theme="light"])
+     is what lets an explicit "light" beat a dark OS setting. */
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
       --bg: #0e0e0e;
       --fg: #ededed;
       --muted: #9d9d9d;
@@ -50,6 +66,22 @@
       --scrim: rgba(0,0,0,0.5);
       --shadow: rgba(0,0,0,0.6);
     }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0e0e0e;
+    --fg: #ededed;
+    --muted: #9d9d9d;
+    --faint: #8a8a8a;
+    --rule: #262626;
+    --panel: #161616;
+    --panel-edge: #2e2e2e;
+    --row-sel: #232323;
+    --row-hover: #1c1c1c;
+    --kbd: #202020;
+    --scrim: rgba(0,0,0,0.5);
+    --shadow: rgba(0,0,0,0.6);
   }
 
   html, body { height: 100%; }
@@ -445,13 +477,29 @@
 
   let muted = store('muted') === '1';
 
+  // auto = follow the OS; light/dark pin it. auto leaves the attribute off
+  // so the prefers-color-scheme rule is what applies.
+  const THEMES = ['auto', 'light', 'dark'];
+  let theme = THEMES.includes(store('theme')) ? store('theme') : 'auto';
+
+  function applyTheme() {
+    if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', theme);
+  }
+  applyTheme();
+
   const commands = [
     { name: 'github',   hint: 'open ↗',       action: () => window.open('https://github.com/anmol-goyal7', '_blank') },
     { name: 'x',        hint: 'open ↗',       action: () => window.open('https://x.com/anmol_goyal7', '_blank') },
     { name: 'linkedin', hint: 'open ↗',       action: () => window.open('https://linkedin.com/in/anmol-goyal-92b460378/', '_blank') },
     { name: 'email',    hint: 'open ↗',       action: () => window.location.href = 'mailto:anmolafk7@gmail.com' },
     { name: 'resume',   hint: 'open ↗',       action: () => window.open('/resume.pdf', '_blank') },
-    { name: 'sound',    hint: () => muted ? 'off' : 'on', action: () => {
+    { name: 'theme',    hint: () => theme, keepOpen: true, action: () => {
+        theme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
+        store('theme', theme);
+        applyTheme();
+      } },
+    { name: 'sound',    hint: () => muted ? 'off' : 'on', keepOpen: true, action: () => {
         muted = !muted;
         store('muted', muted ? '1' : '0');
       } },
@@ -507,8 +555,13 @@
   }
 
   function runCmd(cmd) {
-    closePalette();
+    // toggles stay open so their hint updates in place; links close and go
+    if (!cmd.keepOpen) closePalette();
     cmd.action();
+    if (cmd.keepOpen) {
+      renderList();
+      input.focus();
+    }
   }
 
   document.addEventListener('keydown', (e) => {
