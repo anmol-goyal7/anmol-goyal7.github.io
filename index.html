@@ -18,12 +18,16 @@
 <meta name="twitter:site" content="@anmol_goyal7">
 
 <script>
-  // runs before paint: the palette's theme state lives at the bottom of the
-  // page, and waiting for it would flash the wrong theme on load
+  // runs before paint: the theme state lives at the bottom of the page, and
+  // waiting for it would flash the wrong theme on load. light is the default,
+  // so anything other than a stored 'auto' gets an explicit attribute — a
+  // first-time visitor on a dark OS still lands on light.
   try {
     var t = localStorage.getItem('theme');
-    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-  } catch (e) {}
+    if (t !== 'auto') document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
 </script>
 
 <style>
@@ -47,8 +51,8 @@
   }
 
   /* the dark palette is declared twice on purpose: once behind the media
-     query so it still works with JS off, and once behind the attribute so
-     the palette's `theme` command can force it. :not([data-theme="light"])
+     query so the opt-in "auto" mode still works with JS off, and once behind
+     the attribute so the toggle can force it. :not([data-theme="light"])
      is what lets an explicit "light" beat a dark OS setting. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -213,6 +217,51 @@
     text-underline-offset: 3px;
   }
 
+  /* --- theme toggle --- */
+  /* sits in the viewport corner: on desktop that's the blank strip above the
+     name, since the text column is the right-hand 25% */
+  .theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: var(--muted);
+    cursor: pointer;
+    z-index: 60;
+  }
+
+  .theme-toggle:hover {
+    background: var(--row-hover);
+    color: var(--fg);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 1px solid var(--fg);
+    outline-offset: 1px;
+  }
+
+  .theme-toggle svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* the icon shows the mode you'd switch *to*, so light shows a moon */
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle[data-theme="dark"] .icon-sun { display: block; }
+  .theme-toggle[data-theme="dark"] .icon-moon { display: none; }
+
   .ripple {
     position: fixed;
     border-radius: 50%;
@@ -356,6 +405,13 @@
       background: var(--bg);
       border-radius: 10px;
     }
+    /* full-size tap target on touch */
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      top: 8px;
+      right: 8px;
+    }
     .cmd-tip .tip-text { display: none; }
     .cmd-tip kbd {
       display: inline-block;   /* inline padding wouldn't grow the tap target */
@@ -425,6 +481,11 @@
   </div>
 </div>
 
+<button class="theme-toggle" type="button" data-theme="light" aria-label="switch to dark mode" title="switch to dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
+</button>
+
 <button class="cmd-tip" type="button" aria-label="open command palette"><span class="tip-text">press </span><kbd>/</kbd></button>
 
 <div id="cmd-overlay" role="dialog" aria-modal="true" aria-label="command palette" aria-hidden="true">
@@ -477,16 +538,43 @@
 
   let muted = store('muted') === '1';
 
-  // auto = follow the OS; light/dark pin it. auto leaves the attribute off
-  // so the prefers-color-scheme rule is what applies.
-  const THEMES = ['auto', 'light', 'dark'];
-  let theme = THEMES.includes(store('theme')) ? store('theme') : 'auto';
+  // light is the default; dark pins the dark palette; auto (palette-only)
+  // follows the OS by leaving the attribute off so prefers-color-scheme applies
+  const THEMES = ['light', 'dark', 'auto'];
+  let theme = THEMES.includes(store('theme')) ? store('theme') : 'light';
+
+  const toggle = document.querySelector('.theme-toggle');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // what's actually on screen — the toggle is a two-state control, so it needs
+  // auto collapsed to whichever palette the OS is currently giving us
+  const resolvedTheme = () => theme === 'auto' ? (prefersDark.matches ? 'dark' : 'light') : theme;
 
   function applyTheme() {
     if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
     else document.documentElement.setAttribute('data-theme', theme);
+    syncToggle();
   }
+
+  function syncToggle() {
+    const shown = resolvedTheme();
+    const label = shown === 'dark' ? 'switch to light mode' : 'switch to dark mode';
+    toggle.setAttribute('data-theme', shown);
+    toggle.setAttribute('aria-label', label);
+    toggle.title = label;
+  }
+
   applyTheme();
+
+  toggle.addEventListener('click', () => {
+    theme = resolvedTheme() === 'dark' ? 'light' : 'dark';
+    store('theme', theme);
+    applyTheme();
+    if (overlay.classList.contains('open')) renderList();  // keep the palette hint honest
+  });
+
+  // only matters while on auto, where the OS can flip the palette under us
+  prefersDark.addEventListener('change', syncToggle);
 
   const commands = [
     { name: 'github',   hint: 'open ↗',       action: () => window.open('https://github.com/anmol-goyal7', '_blank') },
