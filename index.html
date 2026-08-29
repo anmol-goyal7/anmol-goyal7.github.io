@@ -45,9 +45,11 @@
     min-height: 100vh;
   }
 
+  /* the photo takes every pixel of slack; the text column is a fixed measure,
+     so the line length stays put no matter how the window is dragged */
   .panel-img {
-    width: 75%;
-    flex-shrink: 0;
+    flex: 1;
+    min-width: 0;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -63,9 +65,10 @@
   }
 
   .panel-content {
-    flex: 1;
-    min-width: 0;
-    padding: 64px 36px 80px 36px;
+    width: 100%;
+    max-width: 560px;
+    flex-shrink: 0;
+    padding: 64px 44px 80px;
   }
 
   .site-name {
@@ -78,7 +81,7 @@
   .site-desc {
     color: var(--muted);
     font-size: 0.9rem;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   }
 
   .about-text {
@@ -94,7 +97,7 @@
   }
 
   .entry-block {
-    padding: 14px 0;
+    padding: 18px 0;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -145,21 +148,25 @@
     font-size: 0.82rem;
     font-weight: 500;
     color: var(--fg);
-    margin-bottom: 10px;
-    margin-top: 28px;
+    margin-bottom: 12px;
+    margin-top: 34px;
   }
 
-  .notes { list-style: none; }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-bottom: 30px;
+  }
 
-  .notes li { padding: 2px 0; }
-
-  .notes a {
+  nav a {
     color: var(--muted);
     font-size: 0.88rem;
     text-decoration: none;
   }
 
-  .notes a:hover {
+  nav a:hover {
+    color: var(--fg);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -222,6 +229,14 @@
     <h1 class="site-name">anmol goyal</h1>
     <p class="site-desc">cs sophomore | systems &amp; graphics</p>
 
+    <nav>
+      <a href="https://github.com/anmol-goyal7" target="_blank" rel="noopener noreferrer">github</a>
+      <a href="https://x.com/anmol_goyal7" target="_blank" rel="noopener noreferrer">twitter / x</a>
+      <a href="https://linkedin.com/in/anmol-goyal-92b460378/" target="_blank" rel="noopener noreferrer">linkedin</a>
+      <a href="mailto:anmolafk7@gmail.com">email</a>
+      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>
+    </nav>
+
     <p class="about-text">
       hi i'm anmol. i like messing around with graphics and c/c++.
       systems right now, plus linear algebra, calculus and discrete maths.
@@ -241,15 +256,6 @@
         <a class="entry-name" href="https://github.com/anmol-goyal7/Matrix-OpenMP-Benchmark" target="_blank" rel="noopener noreferrer">matrix-openmp-benchmark</a> <span class="entry-meta">2025</span>
         <p class="entry-desc">1000×1000 integer matmul parallelised over the outer loop with <code>#pragma omp parallel for</code>, timed against a serial baseline using <code>omp_get_wtime()</code>. 4.25s → 1.12s, 3.79x on 16 threads (4 p-cores + 8 e-cores). haven't isolated how much of the gap from linear is static scheduling across uneven cores, cache behaviour, or thermal throttling.</p>
       </li>
-    </ul>
-
-    <h2>links</h2>
-    <ul class="notes">
-      <li><a href="https://github.com/anmol-goyal7" target="_blank" rel="noopener noreferrer">github</a></li>
-      <li><a href="https://x.com/anmol_goyal7" target="_blank" rel="noopener noreferrer">twitter / x</a></li>
-      <li><a href="https://linkedin.com/in/anmol-goyal-92b460378/" target="_blank" rel="noopener noreferrer">linkedin</a></li>
-      <li><a href="mailto:anmolafk7@gmail.com">email</a></li>
-      <li><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a></li>
     </ul>
 
   </div>
