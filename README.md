@@ -1,26 +1,55 @@
 # anmol-goyal7.github.io
 
-Personal portfolio website hosted on GitHub Pages.
+My personal site, live at **[anmol-goyal7.github.io](https://anmol-goyal7.github.io)**.
 
-## Fork & Setup
+A single static page: no build step, no dependencies, no framework. Just HTML with
+inline CSS and about 30 lines of vanilla JavaScript.
 
-1. **Fork** this repo by clicking the "Fork" button at the top right.
+## Layout
 
-2. **Rename** your fork to `<your-github-username>.github.io` in **Settings > General > Repository name**.
+| File | Purpose |
+| --- | --- |
+| `index.html` | The whole site — markup, styles and the hash router, in one file |
+| `404.html` | Not-found page, served automatically by GitHub Pages |
+| `resume.pdf` | Linked from the header |
 
-3. **Enable GitHub Pages** — go to **Settings > Pages**, set the source to **Deploy from a branch**, and pick `main` / `/ (root)`.
+## How it works
 
-4. **Clone** your fork locally:
-   ```bash
-   git clone https://github.com/<your-username>/<your-username>.github.io.git
-   ```
+The four sections (`about`, `bookshelf`, `setup`, `training`) all live in
+`index.html` as `<section class="view">` blocks. A small hash router shows one at a
+time and keeps `#about`, `#bookshelf`, `#setup` and `#training` linkable.
 
-5. **Customize** — edit `index.html` with your own info, swap out `rover.webp` with your own image (update the `<img src>` and the `og:image` meta tag if you change the filename), and push:
-   ```bash
-   git add -A && git commit -m "personalize" && git push
-   ```
+With JavaScript disabled, every section renders as one long page — the router
+hides sections only after the `js` class lands on `<html>`.
 
-6. Your site will be live at `https://<your-username>.github.io` within a minute or two.
+## Running it locally
+
+No toolchain required. Open the file directly:
+
+```bash
+xdg-open index.html
+```
+
+Or serve it, which is closer to how GitHub Pages behaves (root-relative links and
+the 404 page resolve properly):
+
+```bash
+python3 -m http.server 8000
+```
+
+Then visit <http://localhost:8000>. To check the 404 page, request any path that
+doesn't exist.
+
+## Deploying
+
+GitHub Pages serves `main` from the repository root, so a push to `main` is the
+deploy:
+
+```bash
+git push origin main
+```
+
+The site updates within a minute or two.
 
 ## License
 

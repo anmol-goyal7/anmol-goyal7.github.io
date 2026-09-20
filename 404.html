@@ -1,96 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 — anmol goyal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>404 - anmol goyal</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23111' stroke-width='3'/%3E%3C/svg%3E">
-<script>
-  // runs before paint so a pinned theme doesn't flash the other one.
-  // matches index.html: light is the default, only a stored 'auto' follows the OS
-  try {
-    var t = localStorage.getItem('theme');
-    if (t !== 'auto') document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
-  } catch (e) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-</script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  /* same tokens as index.html: light only, whatever theme the viewer asks for */
   :root {
     color-scheme: light;
-    --bg: #fff;
-    --fg: #111;
-    --muted: #6b6b6b;
-    --faint: #767676;
+    --paper: #ffffff;
+    --ink: #222222;
+    --muted: #6f6f6f;
+    --underline: #bdbdbd;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --bg: #0e0e0e;
-      --fg: #ededed;
-      --muted: #9d9d9d;
-      --faint: #8a8a8a;
-    }
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #0e0e0e;
-    --fg: #ededed;
-    --muted: #9d9d9d;
-    --faint: #8a8a8a;
-  }
+  *, *::before, *::after { box-sizing: inherit; }
 
   html, body { height: 100%; }
 
   body {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 16px;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
     line-height: 1.6;
-    color: var(--fg);
-    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px;
+    padding: 2rem 1.5rem;
   }
 
-  main { max-width: 380px; }
+  main { max-width: 24rem; }
 
   .code {
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: 0.74rem;
-    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.8em;
+    color: var(--muted);
     letter-spacing: 0.02em;
-    margin-bottom: 14px;
+    margin: 0 0 0.9rem;
   }
 
   h1 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 6px;
+    font-size: 1.2em;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 0.4rem;
   }
 
-  p {
-    color: var(--muted);
-    font-size: 0.92rem;
-    margin-bottom: 22px;
-  }
+  p { margin: 0 0 1.4rem; }
 
+  /* links: same colour as the text, thin grey underline */
   a {
-    color: var(--muted);
-    font-size: 0.88rem;
-    text-decoration: none;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--underline);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
   }
 
-  a:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  a:hover { text-decoration-color: currentColor; }
+
+  a:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 40rem) {
+    body { font-size: 16px; padding: 2rem 1.25rem; }
   }
 </style>
 </head>

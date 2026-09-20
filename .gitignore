@@ -1,0 +1,12 @@
+# local editor / assistant state
+.claude/settings.local.json
+
+# os junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editor swap files
+*.swp
+*.swo
+*~
