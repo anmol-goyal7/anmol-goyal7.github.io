@@ -1,316 +1,427 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>anmol goyal</title>
-<meta name="description" content="cs sophomore working on systems and graphics. c/c++ projects: a recursive ray tracer, a mini compiler targeting x86-64, and openmp benchmarks.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23111' stroke-width='3'/%3E%3C/svg%3E">
-
+<meta name="description" content="cs sophomore who likes messing around with c++. math, robotics and graphics.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://anmol-goyal7.github.io/">
 <meta property="og:title" content="anmol goyal">
-<meta property="og:description" content="cs sophomore working on systems and graphics. c/c++ projects: a recursive ray tracer, a mini compiler targeting x86-64, and openmp benchmarks.">
-<meta property="og:image" content="https://anmol-goyal7.github.io/rover.webp">
-<meta property="og:image:alt" content="curiosity rover self-portrait on mars, its wheel tracks curving away behind it">
-
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="cs sophomore who likes messing around with c++. math, robotics and graphics.">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@anmol_goyal7">
-
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23111' stroke-width='3'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  /* every text colour below clears WCAG AA (4.5:1) against its background */
+  /* light only, whatever theme the browser or viewer asks for */
   :root {
     color-scheme: light;
-    --bg: #fff;
-    --fg: #111;
-    --muted: #6b6b6b;
-    --faint: #767676;
-    --rule: #e5e5e5;
+    --paper: #ffffff;
+    --ink: #222222;
+    --muted: #6f6f6f;
+    --underline: #bdbdbd;
+    --code-bg: #f3f3f3;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   }
 
-  html, body { height: 100%; }
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  *, *::before, *::after { box-sizing: inherit; }
 
   body {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 16px;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
     line-height: 1.6;
-    color: var(--fg);
-    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
   }
 
-  .layout {
-    display: flex;
-    min-height: 100vh;
+  /* content on the left, page list on the right */
+  .wrap {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 8rem;
+    grid-template-areas:
+      "head nav"
+      "main nav";
+    column-gap: 4.5rem;
+    align-items: start;
   }
 
-  /* the photo takes every pixel of slack; the text column is a fixed measure,
-     so the line length stays put no matter how the window is dragged */
-  .panel-img {
-    flex: 1;
-    min-width: 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
+  .head  { grid-area: head; }
+  .pages { grid-area: nav; }
+  .main  { grid-area: main; min-width: 0; }
 
-  .panel-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
-
-  .panel-content {
-    width: 100%;
-    max-width: 560px;
-    flex-shrink: 0;
-    padding: 64px 44px 80px;
-  }
-
-  .site-name {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    letter-spacing: -0.01em;
-  }
-
-  .site-desc {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 18px;
-  }
-
-  .about-text {
-    color: var(--muted);
-    font-size: 0.92rem;
-    margin-bottom: 6px;
-    line-height: 1.7;
-  }
-
-  .entries {
-    list-style: none;
-    margin-bottom: 12px;
-  }
-
-  .entry-block {
-    padding: 18px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .entry-block:first-child {
-    border-top: 1px solid var(--rule);
-  }
-
-  .entry-name {
-    display: inline-block;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 0.92rem;
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
-
-  .entry-name:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .entry-desc {
-    color: var(--muted);
-    font-size: 0.86rem;
-    line-height: 1.65;
-  }
-
-  .entry-desc em {
-    font-style: italic;
+  /* links: same colour as the text, thin grey underline */
+  a {
     color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--underline);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
   }
 
-  .entry-desc code {
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: 0.92em;
-    color: var(--fg);
+  a:hover { text-decoration-color: currentColor; }
+
+  a:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
-  .entry-meta {
-    color: var(--faint);
-    font-size: 0.74rem;
-    font-variant-numeric: tabular-nums;
-    margin-left: 8px;
-    font-weight: 400;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* header */
+  .name {
+    font-size: 1.2em;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .connect {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.9rem;
+    margin-top: 0.3rem;
+  }
+
+  /* page list */
+  .pages ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.2rem 0 0;
+  }
+
+  .pages li { margin: 0 0 0.15rem; }
+
+  .pages a { text-decoration: none; }
+
+  .pages a:hover { text-decoration: underline; }
+
+  .pages a[aria-current="page"] { font-weight: 700; }
+
+  /* text */
+  .main { margin-top: 2rem; margin-bottom: 1rem; }
+
+  h1, h2, h3 {
+    font-size: 1em;
+    line-height: 1.35;
+    margin: 0;
   }
 
   h2 {
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--fg);
-    margin-bottom: 12px;
-    margin-top: 34px;
+    font-size: 1.05em;
+    font-weight: 700;
+    margin: 2.25rem 0 0.6rem;
   }
 
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-    margin-bottom: 30px;
+  h3 {
+    font-weight: 400;
+    font-style: italic;
+    margin: 1.75rem 0 0.4rem;
   }
 
-  nav a {
+  .view > h1 + * { margin-top: 0; }
+
+  p { margin: 0 0 0.9rem; }
+
+  ul {
+    margin: 0 0 0.9rem;
+    padding-left: 1.2em;
+  }
+
+  li { margin-bottom: 0.45rem; }
+
+  li > p { margin: 0; }
+
+  cite { font-style: italic; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .meta {
     color: var(--muted);
-    font-size: 0.88rem;
-    text-decoration: none;
+    font-size: 0.9em;
+    font-variant-numeric: tabular-nums;
   }
 
-  nav a:hover {
-    color: var(--fg);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  .entries > li { margin-bottom: 1rem; }
+
+  /* setup: role on the left, tool on the right */
+  .stack {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.15rem 1.25rem;
+    margin: 0 0 0.9rem;
   }
 
-  .ripple {
-    position: fixed;
-    border-radius: 50%;
-    border: 1.5px solid var(--fg);
-    pointer-events: none;
-    z-index: 9997;
-  }
+  .stack dt { color: var(--muted); }
 
-  /* --- rover telemetry --- */
-  #telemetry {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: 0.7rem;
-    line-height: 1.5;
-    color: rgba(255,255,255,0.72);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    pointer-events: none;
-    letter-spacing: 0.02em;
-  }
+  .stack dd { margin: 0; }
 
-  #telemetry .dim { color: rgba(255,255,255,0.42); }
+  /* one page visible at a time; without javascript everything shows */
+  .js .view { display: none; }
 
-  @media (max-width: 900px) {
-    .panel-img { display: none; }
-    .panel-content {
-      max-width: 560px;
-      margin: 0 auto;
-      padding: 56px 28px 80px;
+  .js .view.active { display: block; }
+
+  /* phones: the page list moves under the header */
+  @media (max-width: 40rem) {
+    body { font-size: 16px; }
+
+    .wrap {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "head"
+        "nav"
+        "main";
+      padding: 2.5rem 1.25rem 3rem;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .ripple { display: none; }
+    .pages ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem 1.1rem;
+      padding-top: 1.25rem;
+    }
+
+    .pages li { margin: 0; }
+
+    .main { margin-top: 1.75rem; }
   }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="layout">
-
-  <div class="panel-img">
-    <!-- the panel is display:none below 901px, so the source is gated on the same
-         width and phones fetch nothing instead of 247KB they never see -->
-    <picture>
-      <source media="(min-width: 901px)" srcset="rover.webp" type="image/webp">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-           alt="curiosity rover self-portrait on mars, its wheel tracks curving away behind it" decoding="async">
-    </picture>
-    <div id="telemetry"></div>
-  </div>
-
-  <div class="panel-content">
-
-    <h1 class="site-name">anmol goyal</h1>
-    <p class="site-desc">cs sophomore | robotics &amp; graphics</p>
-
-    <nav>
+  <header class="head">
+    <a class="name" href="#about">anmol goyal</a>
+    <nav class="connect" aria-label="connect">
       <a href="https://github.com/anmol-goyal7" target="_blank" rel="noopener noreferrer">github</a>
-      <a href="https://x.com/anmol_goyal7" target="_blank" rel="noopener noreferrer">twitter / x</a>
-      <a href="https://linkedin.com/in/anmol-goyal-92b460378/" target="_blank" rel="noopener noreferrer">linkedin</a>
+      <a href="https://x.com/anmol_goyal7" target="_blank" rel="noopener noreferrer">x</a>
+      <a href="https://www.linkedin.com/in/anmol-goyal-92b460378/" target="_blank" rel="noopener noreferrer">linkedin</a>
       <a href="mailto:anmolafk7@gmail.com">email</a>
-      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>
+      <a href="https://anmol-goyal7.github.io/resume.pdf" target="_blank" rel="noopener">resume</a>
     </nav>
+  </header>
 
-    <p class="about-text">
-      hi i'm anmol. i like messing around with robots, graphics and c/c++.
-      currently working with robotics and systems.
-    </p>
-
-    <h2>projects</h2>
-    <ul class="entries">
-      <li class="entry-block">
-        <a class="entry-name" href="https://github.com/anmol-goyal7/ray-tracing" target="_blank" rel="noopener noreferrer">ray tracer in c++</a> <span class="entry-meta">2026</span>
-        <p class="entry-desc">recursive ray tracer built following <em>ray tracing in one weekend</em> — monte carlo sampling, diffuse, metal, and dielectric materials, stochastic antialiasing, defocus-blur camera, gamma correction. writes raw ppm, no dependencies.</p>
-      </li>
-      <li class="entry-block">
-        <a class="entry-name" href="https://github.com/anmol-goyal7/mini-compiler" target="_blank" rel="noopener noreferrer">mini compiler (x86-64 asm)</a> <span class="entry-meta">2026</span>
-        <p class="entry-desc">lexer → recursive descent parser → typed ast → x86-64 codegen (at&amp;t syntax) for a minimal c subset. no llvm. the output assembles, links, and returns the right exit code.</p>
-      </li>
-      <li class="entry-block">
-        <a class="entry-name" href="https://github.com/anmol-goyal7/Matrix-OpenMP-Benchmark" target="_blank" rel="noopener noreferrer">matrix-openmp-benchmark</a> <span class="entry-meta">2025</span>
-        <p class="entry-desc">1000×1000 integer matmul parallelised over the outer loop with <code>#pragma omp parallel for</code>, timed against a serial baseline using <code>omp_get_wtime()</code>. 4.25s → 1.12s, 3.79x on 16 threads (4 p-cores + 8 e-cores). haven't isolated how much of the gap from linear is static scheduling across uneven cores, cache behaviour, or thermal throttling.</p>
-      </li>
+  <nav class="pages" aria-label="pages">
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#bookshelf">bookshelf</a></li>
+      <li><a href="#setup">setup</a></li>
+      <li><a href="#training">training</a></li>
     </ul>
+  </nav>
 
-  </div>
+  <main class="main">
+
+    <!-- about -->
+    <section class="view" data-page="about" aria-labelledby="t-about">
+      <h1 id="t-about" class="visually-hidden">about</h1>
+
+      <p>i am a cs sophomore who likes messing around with c++. i spend most of my time doing math and working with robotics.</p>
+
+      <h2>work</h2>
+      <ul class="entries">
+        <li>
+          <p><a href="https://github.com/anmol-goyal7/ray-tracing" target="_blank" rel="noopener noreferrer">ray tracer in c++</a> <span class="meta">2026</span></p>
+          <p>recursive ray tracer built following <cite>ray tracing in one weekend</cite>: monte carlo sampling, diffuse, metal and dielectric materials, stochastic antialiasing, a defocus-blur camera and gamma correction. writes raw ppm, no dependencies.</p>
+        </li>
+        <li>
+          <p><a href="https://github.com/anmol-goyal7/mini-compiler" target="_blank" rel="noopener noreferrer">mini compiler</a> <span class="meta">2026</span></p>
+          <p>lexer, recursive descent parser, typed ast and x86-64 codegen (at&amp;t syntax) for a minimal c subset. no llvm. the output assembles, links, and returns the right exit code.</p>
+        </li>
+        <li>
+          <p><a href="https://github.com/anmol-goyal7/Matrix-OpenMP-Benchmark" target="_blank" rel="noopener noreferrer">matrix openmp benchmark</a> <span class="meta">2025</span></p>
+          <p>1000×1000 integer matrix multiply, parallelised over the outer loop with <code>#pragma omp parallel for</code> and timed against a serial baseline with <code>omp_get_wtime()</code>. 4.25s to 1.12s, a 3.79x speedup on 16 threads (4 p&#8209;cores + 8 e&#8209;cores). haven't isolated how much of the gap from linear comes from static scheduling across uneven cores, cache behaviour, or thermal throttling.</p>
+        </li>
+      </ul>
+
+      <h2>interests</h2>
+      <ul>
+        <li><strong>robotics.</strong> recently introduced to robotics, and for now i am loving it. i am solving all the exercises in c++: <a href="https://github.com/anmol-goyal7/robotics" target="_blank" rel="noopener noreferrer">github.com/anmol-goyal7/robotics</a>.</li>
+        <li><strong>graphics.</strong> spent my 2nd semester mostly understanding how a ray tracer works. looking towards getting deeper into it, but for now there's not particularly anything graphics-related that i am doing.</li>
+        <li><strong>space.</strong> read about black holes and the big bang theory in high school, and would love to revisit them in my career somehow.</li>
+      </ul>
+    </section>
+
+    <!-- bookshelf -->
+    <section class="view" data-page="bookshelf" aria-labelledby="t-bookshelf">
+      <h1 id="t-bookshelf" class="visually-hidden">bookshelf</h1>
+      <ul>
+        <li>
+          <p><cite>let us c</cite> <span class="meta">yashavant kanetkar</span></p>
+          <p>my first programming book.</p>
+        </li>
+        <li>
+          <p><cite>ray tracing in one weekend</cite> <span class="meta">peter shirley</span></p>
+          <p>introduced me to graphics.</p>
+        </li>
+        <li>
+          <p><cite>modern robotics</cite> <span class="meta">kevin lynch and frank park</span></p>
+          <p>currently my main read.</p>
+        </li>
+        <li>
+          <p><cite>the theory of everything</cite> <span class="meta">stephen hawking</span></p>
+          <p>read this book during high school. reading it made me fall in love with physics.</p>
+        </li>
+        <li>
+          <p><cite>can't hurt me</cite> <span class="meta">david goggins</span></p>
+          <p>it is a life-changing book. i think everyone should read this.</p>
+        </li>
+        <li>
+          <p><cite>the subtle art of not giving a f*ck</cite> <span class="meta">mark manson</span></p>
+          <p>after reading this, my cortisol is usually on the lower side.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- setup -->
+    <section class="view" data-page="setup" aria-labelledby="t-setup">
+      <h1 id="t-setup" class="visually-hidden">setup</h1>
+
+      <p>i can use my entire setup without a trackpad or a mouse.</p>
+
+      <h2>linux</h2>
+      <p>i installed arch linux in the first semester of my college. my peers said, "are you mad that you wiped windows and installed arch? how do you even use this thing?" at that time, i wasn't using claude code or codex, so i had to manually click pictures of errors and ask gemini what i should do. it took me a lot of hours to set up that thing, but all that headache and irritation gave me a setup which i can use trackpad-free.</p>
+
+      <h2>neovim</h2>
+      <p>stop using vs code. i have never installed vs code in my life; i have been using neovim as my first editor. it is faster to use: you don't have to move your cursor to code every time you want to make changes. you can customize it however you want, which is underrated imo. use tmux and lazyvim; there are a ton of tools like that. i think it's at least worth giving it a try.</p>
+      <p>mine runs on lazy.nvim with about 30 plugins, including telescope, treesitter, harpoon, oil, blink.cmp, mason and nvim-dap.</p>
+
+      <h2>dotfiles</h2>
+      <p>everything lives in <a href="https://github.com/anmol-goyal7/dotfiles" target="_blank" rel="noopener noreferrer">github.com/anmol-goyal7/dotfiles</a>. two rules run through it: no trackpad or mouse, and a pure-black oled screen that ages slowly.</p>
+
+      <h3>the stack</h3>
+      <dl class="stack">
+        <dt>compositor</dt><dd>hyprland, configured in lua</dd>
+        <dt>bar</dt><dd>waybar</dd>
+        <dt>notifications</dt><dd>swaync</dd>
+        <dt>terminal</dt><dd>kitty</dd>
+        <dt>shell</dt><dd>zsh, with vim mode, fzf and zoxide</dd>
+        <dt>editor</dt><dd>neovim</dd>
+        <dt>multiplexer</dt><dd>tmux</dd>
+        <dt>launcher</dt><dd>wofi and rofi</dd>
+        <dt>files</dt><dd>yazi</dd>
+        <dt>browser</dt><dd>qutebrowser</dd>
+        <dt>pdfs</dt><dd>zathura</dd>
+        <dt>music</dt><dd>cmus</dd>
+        <dt>theme</dt><dd>tokyo night, pure black for oled</dd>
+      </dl>
+
+      <h3>no trackpad or mouse</h3>
+      <ul>
+        <li>vim keys run the windows: <code>super+hjkl</code> focuses, <code>super+shift+hjkl</code> resizes, <code>super+ctrl+hjkl</code> moves.</li>
+        <li>wl-kbptr puts a letter grid on the screen. type the letters for a cell, narrow it down, and the pointer clicks there. ydotool covers the rare click nothing else can.</li>
+        <li><code>super+/</code> opens a searchable cheatsheet of every keybind, read live from the compositor.</li>
+        <li>zsh, tmux and qutebrowser all run on vim keys too.</li>
+      </ul>
+
+      <h3>scripts in bin/</h3>
+      <ul>
+        <li><strong>zen</strong> locks me into one window. every global keybind goes dead until i leave, and notifications go quiet.</li>
+        <li><strong>red</strong> is a shader that turns the screen fully red for night work.</li>
+        <li><strong>afk</strong> keeps the laptop awake for a set time, like <code>afk 9h</code>.</li>
+        <li><strong>saver, balance, performance, game</strong> are power modes on the function keys, built on cpupower, intel p-state and tlp. <strong>powermode</strong> shows which one is on.</li>
+        <li><strong>battery-low-warning</strong> is a systemd service that waits on upower events and closes its own warning the moment the charger goes in.</li>
+        <li><strong>waybar-pixelshift</strong> moves the bar a few pixels every 10 minutes so nothing burns into the oled.</li>
+        <li><strong>dpms, lock, screen-wake</strong> are the safety net for the idle ladder (dim, lock, screen off, suspend), so the screen always comes back.</li>
+        <li><strong>cdbg</strong> builds a single c/c++ file and runs it under asan and ubsan, valgrind, gdb, rr or hyperfine.</li>
+        <li><strong>dsa</strong> opens my dsa practice layout on one key, turns on do-not-disturb and logs the session.</li>
+        <li><strong>pomo</strong> is a terminal pomodoro that silences notifications during focus blocks.</li>
+        <li><strong>ytm, cmus-open</strong> pull audio into my music folder and open it in cmus.</li>
+        <li><strong>keys, hlset</strong> are the keybind cheatsheet and a helper for changing hyprland settings from scripts.</li>
+      </ul>
+
+      <h3>blockers</h3>
+      <ul>
+        <li><strong>no-shorts</strong> blocks youtube shorts and instagram reels for good while the rest of both sites keeps working. it's a browser policy plus a force-installed extension, with tests.</li>
+        <li><strong>social-block</strong> null-routes instagram, linkedin, x and reddit between 22:00 and 06:00 on systemd timers.</li>
+      </ul>
+
+      <h3>small things</h3>
+      <ul>
+        <li>a tap on the power button wakes the laptop instead of shutting it down.</li>
+        <li><code>super+shift+t</code> ocrs any region of the screen with tesseract and puts the text on the clipboard.</li>
+        <li>screenshots with hyprshot, a dropdown terminal, and a window overview on <code>super+a</code> through quickshell.</li>
+      </ul>
+
+      <p>the hyprland config started from <a href="https://github.com/JaKooLit/Hyprland-Dots" target="_blank" rel="noopener noreferrer">jakoolit's hyprland-dots</a>.</p>
+
+      <p>shoutout to claude code; it's the one because of whom all of this setup was possible.</p>
+    </section>
+
+    <!-- training -->
+    <section class="view" data-page="training" aria-labelledby="t-training">
+      <h1 id="t-training" class="visually-hidden">training</h1>
+
+      <h2>tae-kwon-do</h2>
+      <p>my school taught me tae-kwon-do. i was once featured in a newspaper during kindergarten.</p>
+
+      <h2>cricket</h2>
+      <p>i played cricket for most of my childhood, from my kindergarten till my middle school. i used to be a right&#8209;hand batsman.</p>
+
+      <h2>basketball</h2>
+      <p>i spent most of my time in my high school playing basketball. i used to be a shooter, and at one point i had a 30% 3-point shooting percentage. i stopped playing after my 120 kg friend fell on me and i broke my leg. it took me almost a year to fully recover.</p>
+
+      <h2>hyrox/gym</h2>
+      <p>in my freshman year, i pivoted towards bodybuilding and hyrox training. i do low&#8209;volume, high&#8209;intensity training 3-4x a week. i try to be consistent with doing zone 2 cardio, but usually it's hard to take time and do it.</p>
+    </section>
+
+  </main>
+
 </div>
 
 <script>
-  // --- rover telemetry ---
-  const tel = document.getElementById('telemetry');
-  let sol = 4291;
-  let temp = -14.2;
-  let battery = 87;
+  // tiny hash router: #about, #bookshelf, #setup, #training
+  (function () {
+    var pages = ['about', 'bookshelf', 'setup', 'training'];
+    var views = document.querySelectorAll('.view');
+    var links = document.querySelectorAll('.pages a');
 
-  function pad(n, w) { return String(n).padStart(w, '0'); }
+    function show() {
+      var name = location.hash.slice(1);
+      if (pages.indexOf(name) === -1) name = 'about';
 
-  function renderTelemetry() {
-    // small random drift
-    temp += (Math.random() - 0.5) * 0.4;
-    battery += (Math.random() - 0.55) * 0.3;
-    if (battery < 60) battery = 60 + Math.random() * 5;
-    if (battery > 99) battery = 99;
-    if (Math.random() < 0.05) sol += 1;
+      views.forEach(function (v) {
+        v.classList.toggle('active', v.getAttribute('data-page') === name);
+      });
+      links.forEach(function (a) {
+        if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+      document.title = name === 'about' ? 'anmol goyal' : name + ' - anmol goyal';
+      window.scrollTo(0, 0);
+    }
 
-    const t = temp.toFixed(1);
-    const b = Math.round(battery);
-    const status = b > 75 ? 'nominal' : 'low power';
-
-    tel.innerHTML =
-      '<span class="dim">sol</span> ' + sol + '  ' +
-      '<span class="dim">temp</span> ' + t + '\u00B0C  ' +
-      '<span class="dim">batt</span> ' + b + '%<br>' +
-      '<span class="dim">link</span> earth \u2192 mars  ' +
-      '<span class="dim">status</span> ' + status;
-  }
-
-  renderTelemetry();
-  setInterval(renderTelemetry, 2000);
-
-  // --- click ripple ---
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  document.addEventListener('click', (e) => {
-    if (reduceMotion.matches) return;
-    const r = document.createElement('div');
-    r.className = 'ripple';
-    r.style.left = e.clientX + 'px';
-    r.style.top  = e.clientY + 'px';
-    r.style.width  = '1px';
-    r.style.height = '1px';
-    r.style.transform = 'translate(-50%,-50%)';
-    document.body.appendChild(r);
-    r.animate([
-      { width: '0px',  height: '0px',  opacity: 0.5 },
-      { width: '70px', height: '70px', opacity: 0   }
-    ], { duration: 480, easing: 'ease-out', fill: 'forwards' }).onfinish = () => r.remove();
-  });
+    window.addEventListener('hashchange', show);
+    show();
+  })();
 </script>
-
 </body>
 </html>
